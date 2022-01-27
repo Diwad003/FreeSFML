@@ -1,2 +1,7 @@
-﻿  SFML Template.cpp
+﻿  Game.cpp
+C:\Users\Dawid\Documents\GitHub\FreeSFML\Game.cpp(96,53): warning C4244: 'argument': conversion from 'size_t' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
   FreeSFML.vcxproj -> C:\Users\Dawid\Documents\GitHub\FreeSFML\Debug\FreeSFML.exe
