@@ -4,7 +4,7 @@ int main()
 {
     sf::Texture myWallTexture;
     myWallTexture.loadFromFile("Sprites/Wall.png");
-    sf::RenderWindow tempWindow(sf::VideoMode(myWallTexture.getSize().x, myWallTexture.getSize().y), "SFML works!");
+    sf::RenderWindow tempWindow(sf::VideoMode(myWallTexture.getSize().x, myWallTexture.getSize().y), "SFML works!", sf::Style::Fullscreen);
     Game* tempGame = new Game(tempWindow);
     while (tempWindow.isOpen())
     {

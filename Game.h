@@ -12,13 +12,11 @@ public:
 
 private:
 	sf::RenderWindow* myWindow;
-	sf::View* myView;
-	std::vector<sf::Sprite> myWallSprites = std::vector<sf::Sprite>();
 	sf::Texture* myWallTexture;
+	sf::Sprite* mySprite;
 
 	sf::Clock myDeltaTimeClock;
 	float myDeltaTime;
-	float myWallAcceleration;
 	float myWallVelocity;
 };
 #endif

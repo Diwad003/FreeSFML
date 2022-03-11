@@ -1,20 +1,21 @@
 #include "Game.h"
-#include <iostream>
 
 Game::Game(sf::RenderWindow& aWindow)
 {
     myWindow = &aWindow;
-    myView = new sf::View(myWindow->getDefaultView());
     myDeltaTime = 0;
     myWallVelocity = 0;
-    myWallAcceleration = 0.5f;
+    
 
     myWallTexture = new sf::Texture();
     myWallTexture->loadFromFile("Sprites/Wall.png");
-
-    const sf::IntRect tempSpriteSize(myWindow->getPosition(), sf::Vector2i(myWindow->getSize().x, myWindow->getSize().y));
-    for (int i = 0; i < 2; ++i)
-        myWallSprites.push_back(sf::Sprite(*myWallTexture, tempSpriteSize));
+    
+    myWallTexture->setRepeated(true);
+    mySprite = new sf::Sprite();
+    mySprite->setTexture(*myWallTexture);
+    sf::IntRect tempIntRectangle(0, 0, 100000, myWallTexture->getSize().y);
+    mySprite->setTextureRect(tempIntRectangle);
+    mySprite->setPosition(-(tempIntRectangle.width / 2), 0);
 }
 
 void Game::Update()
@@ -24,52 +25,37 @@ void Game::Update()
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
         myWindow->close();
 
-#pragma region Wall
+#pragma region Wall Logic
     //Wall Movement/Scrolling
-    int tempWallSpeed = 10;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && myWallVelocity < 50)
+    float tempWallAcceleration = 0.5f;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && myWallVelocity < 300)
     {
-        myWallVelocity += myWallAcceleration;
+        myWallVelocity += tempWallAcceleration;
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && myWallVelocity > -50)
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && myWallVelocity > -300)
     {
-        myWallVelocity -= myWallAcceleration;
+        myWallVelocity -= tempWallAcceleration;
     }
     if (!sf::Keyboard::isKeyPressed(sf::Keyboard::D) && !sf::Keyboard::isKeyPressed(sf::Keyboard::A) && myWallVelocity != 0)
     {
         if (myWallVelocity < 0)
         {
-            myWallVelocity += myWallAcceleration;
+            myWallVelocity += tempWallAcceleration;
         }
         else
         {
-            myWallVelocity -= myWallAcceleration;
+            myWallVelocity -= tempWallAcceleration;
         }
     }
 
-    if ((myWallSprites[0].getPosition().x + myWallSprites[0].getTexture()->getSize().x) < 0) //out of screen
-    {
-        myWallSprites[0].setPosition(int(myWallSprites[1].getPosition().x + myWallSprites[1].getTexture()->getSize().x), 0);
-        myWallSprites[1].setPosition(int(myWallSprites[0].getPosition().x - myWallSprites[0].getTexture()->getSize().x), 0);
-    }
-    if ((myWallSprites[1].getPosition().x + myWallSprites[1].getTexture()->getSize().x < 0)) //out of screen
-    {
-        myWallSprites[1].setPosition(int(myWallSprites[0].getPosition().x + myWallSprites[0].getTexture()->getSize().x), 0);
-        myWallSprites[0].setPosition(int(myWallSprites[1].getPosition().x - myWallSprites[1].getTexture()->getSize().x), 0);
-    }
-
-    myWallSprites[0].move(myWallVelocity * myDeltaTime * tempWallSpeed, 0);
-    myWallSprites[1].move(myWallVelocity * myDeltaTime * tempWallSpeed, 0);
+    mySprite->move(myWallVelocity * myDeltaTime, 0);
 #pragma endregion
+
+
 }
 
 void Game::Draw()
 {
-    for (size_t i = 0; i < myWallSprites.size(); i++)
-        myWindow->draw(myWallSprites[i]);
-
-
-
     sf::Text tempText;
     sf::Font tempFont;
     tempFont.loadFromFile("arial.ttf");
@@ -78,15 +64,10 @@ void Game::Draw()
     tempText.setFillColor(sf::Color::Red);
     tempText.setStyle(sf::Text::Bold);
 
+    //tempText.setString("SPRITE X: " + std::to_string(mySprite->getPosition().x) + "\nY: " + std::to_string(mySprite->getPosition().y) + "\nmyWallVelocity" + std::to_string(myWallVelocity));
 
-    tempText.setString(std::to_string(myWallVelocity));
+    myWindow->draw(*mySprite);
     myWindow->draw(tempText);
-    tempText.setPosition(sf::Vector2f(0, 20));
-    for (size_t i = 0; i < myWallSprites.size(); i++)
-        tempText.setString("X " + std::to_string(myWallSprites[i].getPosition().x) + " Y " + std::to_string(myWallSprites[i].getPosition().y));
-    myWindow->draw(tempText);
-
-
 
     myWindow->display();
 }
