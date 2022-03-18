@@ -1,3 +1,20 @@
-﻿  Game.cpp
-C:\Users\dawid.lembrer\source\repos\FreeSFML\FreeSFML\Game.cpp(18,27): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+﻿  Party_Member.cpp
+C:\Users\dawid.lembrer\source\repos\FreeSFML\FreeSFML\Party_Member.cpp(8,84): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\dawid.lembrer\source\repos\FreeSFML\FreeSFML\Party_Member.cpp(8,70): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
   FreeSFML.vcxproj -> C:\Users\dawid.lembrer\source\repos\FreeSFML\Debug\FreeSFML.exe

@@ -2,6 +2,7 @@
 #define GAME_HEADER
 
 #include <SFML/Graphics.hpp>
+#include "Party_Member.h"
 
 class Game
 {
@@ -13,7 +14,9 @@ public:
 private:
 	sf::RenderWindow* myWindow;
 	sf::Texture* myWallTexture;
-	sf::Sprite* mySprite;
+	sf::Sprite* myWallSprite;
+	Party_Member* myPartyLeader;
+
 
 	sf::Clock myDeltaTimeClock;
 	float myDeltaTime;

@@ -1,4 +1,5 @@
 #include "Game.h"
+#include <iostream>
 
 Game::Game(sf::RenderWindow& aWindow)
 {
@@ -6,16 +7,22 @@ Game::Game(sf::RenderWindow& aWindow)
     myDeltaTime = 0;
     myWallVelocity = 0;
     
+    //system("dir");
 
     myWallTexture = new sf::Texture();
     myWallTexture->loadFromFile("Sprites/Wall.png");
     
     myWallTexture->setRepeated(true);
-    mySprite = new sf::Sprite();
-    mySprite->setTexture(*myWallTexture);
+    myWallSprite = new sf::Sprite();
+    myWallSprite->setTexture(*myWallTexture);
     sf::IntRect tempIntRectangle(0, 0, 100000, myWallTexture->getSize().y);
-    mySprite->setTextureRect(tempIntRectangle);
-    mySprite->setPosition(-(tempIntRectangle.width / 2), 0);
+    myWallSprite->setTextureRect(tempIntRectangle);
+    myWallSprite->setPosition(-(tempIntRectangle.width / 2), 0);
+
+
+    sf::Texture tempPartyLeaderTexture = sf::Texture();
+    tempPartyLeaderTexture.loadFromFile("Sprites/PartyLeader.png");
+    myPartyLeader = new Party_Member(sf::Vector2f(-(tempIntRectangle.width / 2), 0), 1, tempPartyLeaderTexture, 1);
 }
 
 void Game::Update()
@@ -28,13 +35,27 @@ void Game::Update()
 #pragma region Wall Logic
     //Wall Movement/Scrolling
     float tempWallAcceleration = 0.5f;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && myWallVelocity < 300)
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && myWallVelocity < 100)
     {
-        myWallVelocity += tempWallAcceleration;
+        if (myWallVelocity < 0)
+        {
+            myWallVelocity = 0;
+        }
+        else
+        {
+            myWallVelocity += tempWallAcceleration;
+        }
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && myWallVelocity > -300)
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && myWallVelocity > -100)
     {
-        myWallVelocity -= tempWallAcceleration;
+        if (myWallVelocity > 0)
+        {
+            myWallVelocity = 0;
+        }
+        else
+        {
+            myWallVelocity -= tempWallAcceleration;
+        }
     }
     if (!sf::Keyboard::isKeyPressed(sf::Keyboard::D) && !sf::Keyboard::isKeyPressed(sf::Keyboard::A) && myWallVelocity != 0)
     {
@@ -48,7 +69,8 @@ void Game::Update()
         }
     }
 
-    mySprite->move(myWallVelocity * myDeltaTime, 0);
+    myWallSprite->move(myWallVelocity * myDeltaTime, 0);
+    myPartyLeader->SetPosition(sf::Vector2f(myWallVelocity * myDeltaTime, 0));
 #pragma endregion
 
 
@@ -64,10 +86,11 @@ void Game::Draw()
     tempText.setFillColor(sf::Color::Red);
     tempText.setStyle(sf::Text::Bold);
 
-    //tempText.setString("SPRITE X: " + std::to_string(mySprite->getPosition().x) + "\nY: " + std::to_string(mySprite->getPosition().y) + "\nmyWallVelocity" + std::to_string(myWallVelocity));
+    tempText.setString("TEXTURE");
 
-    myWindow->draw(*mySprite);
+    myWindow->draw(*myWallSprite);
     myWindow->draw(tempText);
+    myPartyLeader->Draw(*myWindow);
 
     myWindow->display();
 }

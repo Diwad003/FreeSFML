@@ -1,0 +1,33 @@
+﻿  Entity.cpp
+  Game.cpp
+C:\Users\dawid.lembrer\source\repos\FreeSFML\FreeSFML\Game.cpp(19,31): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\dawid.lembrer\source\repos\FreeSFML\FreeSFML\Game.cpp(28,51): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+  Party_Member.cpp
+C:\Users\dawid.lembrer\source\repos\FreeSFML\FreeSFML\Party_Member.cpp(8,84): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+C:\Users\dawid.lembrer\source\repos\FreeSFML\FreeSFML\Party_Member.cpp(8,70): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+  SFML Template.cpp
+  Generating code
+  Previous IPDB not found, fall back to full compilation.
+  All 124 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  FreeSFML.vcxproj -> C:\Users\dawid.lembrer\source\repos\FreeSFML\Release\FreeSFML.exe
