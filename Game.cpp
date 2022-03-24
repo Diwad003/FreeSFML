@@ -1,11 +1,13 @@
 #include "Game.h"
 #include <iostream>
+#include "Battle.h"
 
 Game::Game(sf::RenderWindow& aWindow)
 {
     myWindow = &aWindow;
     myDeltaTime = 0;
     myWallVelocity = 0;
+    myTimeForBattle = false;
     
     //system("dir");
 
@@ -22,7 +24,17 @@ Game::Game(sf::RenderWindow& aWindow)
 
     sf::Texture tempPartyLeaderTexture = sf::Texture();
     tempPartyLeaderTexture.loadFromFile("Sprites/PartyLeader.png");
-    myPartyLeader = new Party_Member(sf::Vector2f(-(tempIntRectangle.width / 2), 0), 1, tempPartyLeaderTexture, 1);
+    sf::Sprite tempPlayerPartyLeaderSprite = sf::Sprite();
+    tempPlayerPartyLeaderSprite.setScale(0.6f, 0.6f);
+
+    int tempFloorY = 691;
+    myPlayerParty.push_back(new Party_Member(sf::Vector2f(1000, tempFloorY), 1, tempPlayerPartyLeaderSprite, tempPartyLeaderTexture, 1));
+
+    sf::Texture tempEnemyPartyLeaderTexture = sf::Texture();
+    tempEnemyPartyLeaderTexture.loadFromFile("Sprites/EnemyLeader.png");
+    sf::Sprite tempEnemyPartyLeaderSprite = sf::Sprite();
+    tempEnemyPartyLeaderSprite.setScale(0.6f, 0.6f);
+    myEnemyParty.push_back(new Enemy_Party_Member(sf::Vector2f(2000, tempFloorY), 1, tempEnemyPartyLeaderSprite, tempEnemyPartyLeaderTexture, 1, myPlayerParty));
 }
 
 void Game::Update()
@@ -31,6 +43,12 @@ void Game::Update()
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
         myWindow->close();
+
+    myTimeForBattle = myEnemyParty[0]->GetTimeForBattle();
+    if (myTimeForBattle)
+    {
+        BattleLoop();
+    }
 
 #pragma region Wall Logic
     //Wall Movement/Scrolling
@@ -70,27 +88,47 @@ void Game::Update()
     }
 
     myWallSprite->move(myWallVelocity * myDeltaTime, 0);
-    myPartyLeader->SetPosition(sf::Vector2f(myWallVelocity * myDeltaTime, 0));
 #pragma endregion
 
-
+    for (size_t i = 0; i < myEnemyParty.size(); i++)
+    {
+        myEnemyParty[i]->SetPosition(sf::Vector2f(myWallVelocity * myDeltaTime, 0));
+        myEnemyParty[i]->Update();
+    }
 }
 
 void Game::Draw()
 {
-    sf::Text tempText;
-    sf::Font tempFont;
-    tempFont.loadFromFile("arial.ttf");
-    tempText.setFont(tempFont);
-    tempText.setCharacterSize(24);
-    tempText.setFillColor(sf::Color::Red);
-    tempText.setStyle(sf::Text::Bold);
+    //sf::Text tempText;
+    //sf::Font tempFont;
+    //tempFont.loadFromFile("arial.ttf");
+    //tempText.setFont(tempFont);
+    //tempText.setCharacterSize(24);
+    //tempText.setFillColor(sf::Color::Red);
+    //tempText.setStyle(sf::Text::Bold);
+    //tempText.setString("TEXTURE");
 
-    tempText.setString("TEXTURE");
 
     myWindow->draw(*myWallSprite);
-    myWindow->draw(tempText);
-    myPartyLeader->Draw(*myWindow);
+    //myWindow->draw(tempText);
+
+    for (size_t i = 0; i < myPlayerParty.size(); i++)
+    {
+        myPlayerParty[i]->Draw(*myWindow);
+    }
+    for (size_t i = 0; i < myEnemyParty.size(); i++)
+    {
+        myEnemyParty[i]->Draw(*myWindow);
+    }
 
     myWindow->display();
+}
+
+void Game::BattleLoop()
+{
+    Battle tempBattle = Battle(myPlayerParty, myEnemyParty, *myWallSprite);
+    while (myTimeForBattle)
+    {
+        tempBattle.BattleLogic(*myWindow);
+    }
 }

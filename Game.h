@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "Party_Member.h"
+#include "Enemy_Party_Member.h"
 
 class Game
 {
@@ -11,15 +12,21 @@ public:
 	void Update();
 	void Draw();
 
+	void BattleLoop();
+
 private:
 	sf::RenderWindow* myWindow;
 	sf::Texture* myWallTexture;
 	sf::Sprite* myWallSprite;
-	Party_Member* myPartyLeader;
+
+	std::vector<Party_Member*> myPlayerParty;
+	std::vector<Enemy_Party_Member*> myEnemyParty;
 
 
 	sf::Clock myDeltaTimeClock;
 	float myDeltaTime;
 	float myWallVelocity;
+
+	bool myTimeForBattle;
 };
 #endif

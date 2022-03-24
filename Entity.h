@@ -7,11 +7,17 @@ class Entity
 {
 public:
 	Entity();
-	Entity(sf::Vector2f aPosition, int aHealth, sf::Sprite aSprite, int aDMG);
 
 	void TakeDamage(int aDMG);
+	void SetPosition(sf::Vector2f aMoveTo);
+	void Draw(sf::RenderWindow& aWindow);
+	sf::Vector2f GetPosition();
+	sf::Sprite GetSprite();
 
 protected:
+	virtual void Update() = 0;
+
+
 	sf::Vector2f myPosition;
 	sf::Texture myTexture;
 	int myHealth;

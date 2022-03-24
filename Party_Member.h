@@ -1,16 +1,14 @@
-#ifndef PARTY_MEMBER
-#define PARTY_MEMBER
+#ifndef PARTY_MEMBER_HEADER
+#define PARTY_MEMBER_HEADER
 
 #include "Entity.h"
 
 class Party_Member : public Entity
 {
 public:
-	Party_Member(sf::Vector2f aPosition, int aHealth, sf::Texture aTexture, int aDMG);
+	Party_Member(sf::Vector2f aPosition, int aHealth, sf::Sprite aSprite, sf::Texture &aTexture, int aDMG);
 
 	void Update();
-	void SetPosition(sf::Vector2f aMoveTo);
-	void Draw(sf::RenderWindow& aWindow);
 
 private:
 
