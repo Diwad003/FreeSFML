@@ -69,7 +69,6 @@ void Battle::BattleLogic(sf::RenderWindow& aWindow)
 				break;
 			}
 		}
-
 	}
 	else // EnemyTurn
 	{
@@ -78,6 +77,26 @@ void Battle::BattleLogic(sf::RenderWindow& aWindow)
 
 
 	Draw(aWindow);
+}
+
+void Battle::Attack()
+{
+
+}
+
+void Battle::Defend()
+{
+
+}
+
+void Battle::Heal()
+{
+
+}
+
+void Battle::UseAbilities()
+{
+
 }
 
 void Battle::Draw(sf::RenderWindow& aWindow)
