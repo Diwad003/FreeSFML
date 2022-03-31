@@ -1,15 +1,20 @@
-﻿  Game.cpp
-C:\Users\Dawid\Documents\GitHub\FreeSFML\Game.cpp(20,31): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\Dawid\Documents\GitHub\FreeSFML\Game.cpp(29,65): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+﻿  Battle.cpp
+C:\Users\dawid.lembrer\source\repos\FreeSFML\FreeSFML\Battle.cpp(43,26): error C2065: 'length': undeclared identifier
+  Enemy_Party_Member.cpp
+  Entity.cpp
+  Game.cpp
+C:\Users\dawid.lembrer\source\repos\FreeSFML\FreeSFML\Game.cpp(22,31): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\dawid.lembrer\source\repos\FreeSFML\FreeSFML\Game.cpp(31,65): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\Dawid\Documents\GitHub\FreeSFML\Game.cpp(35,70): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\dawid.lembrer\source\repos\FreeSFML\FreeSFML\Game.cpp(37,70): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float
           ]
+C:\Users\dawid.lembrer\source\repos\FreeSFML\FreeSFML\Game.cpp(37,160): error C2661: 'Enemy_Party_Member::Enemy_Party_Member': no overloaded function takes 6 arguments
+  Party_Member.cpp
   SFML Template.cpp
   Generating Code...
-  FreeSFML.vcxproj -> C:\Users\Dawid\Documents\GitHub\FreeSFML\Debug\FreeSFML.exe

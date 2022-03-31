@@ -39,64 +39,85 @@ void Battle::BattleLogic(sf::RenderWindow& aWindow)
 {
 	if (myPlayerTurn)
 	{
-		while (true)
+		std::string tempString = "You are in a battle with the enemy, press on the respective number for the action you want to do:\n1: Attack\n";
+		for (size_t i = 0; i < myPlayerPartyMembers.size(); i++)
 		{
-			myText.setString("You are in a battle with the enemy, press on the respective number for the action you want to do:\n"
-				"1: Attack\n2: Defend\n3: Heal\n4: Use abilities");
-
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
+			if (myPlayerPartyMembers[i]->GetClass() == Entity::Classes::Healer)
 			{
-
-
-				break;
+				std::string str2("2: Heal\n");
+				if (!(tempString.find(str2) != std::string::npos)) 
+				{
+					tempString += "2: Heal\n";
+				}
 			}
-			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2))
+		}
+
+		myText.setString(tempString);
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
+		{
+			tempString = "You are currently in attack, which party member do you want to attack with?\n";
+			for (size_t i = 0; i < myPlayerPartyMembers.size(); i++)
 			{
-
-
-				break;
+				tempString = std::to_string(i) + ". " + myPlayerPartyMembers[i]->GetClassStringRepresentation();
 			}
-			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3))
+
+			while (true)
 			{
-
-
-				break;
+				Party_Member tempAttackingPartyMember;
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
+				{
+					tempAttackingPartyMember = *myPlayerPartyMembers[0];
+					break;
+				}
+				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2))
+				{
+					tempAttackingPartyMember = *myPlayerPartyMembers[1];
+					break;
+				}
+				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3))
+				{
+					tempAttackingPartyMember = *myPlayerPartyMembers[2];
+					break;
+				}
 			}
-			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num4))
-			{
 
 
-				break;
-			}
+
+
+			Enemy_Party_Member tempFirstEnemy = *myEnemyPartyMembers[0];
+			Party_Member tempFirstPlayer = *myPlayerPartyMembers[0];
+
+			tempFirstEnemy.TakeDamage(tempFirstPlayer.GetDamage());
+			myPlayerTurn = false;
+		}
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2))
+		{
+			//IMPLEMENT HEALING WITH HEALING ITEMS
+			myPlayerTurn = false;
 		}
 	}
 	else // EnemyTurn
 	{
+		int tempRNG = rand() % 3 + 1;
+		if (tempRNG == 1)
+		{
+			Enemy_Party_Member tempFirstEnemy = *myEnemyPartyMembers[0];
+			Party_Member tempFirstPlayer = *myPlayerPartyMembers[0];
 
+			tempFirstPlayer.TakeDamage(tempFirstEnemy.GetDamage());
+		}
+		else if (tempRNG == 2)
+		{
+
+		}
+		else
+		{
+
+		}
 	}
 
 
 	Draw(aWindow);
-}
-
-void Battle::Attack()
-{
-
-}
-
-void Battle::Defend()
-{
-
-}
-
-void Battle::Heal()
-{
-
-}
-
-void Battle::UseAbilities()
-{
-
 }
 
 void Battle::Draw(sf::RenderWindow& aWindow)

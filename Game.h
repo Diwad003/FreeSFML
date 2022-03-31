@@ -12,8 +12,6 @@ public:
 	void Update();
 	void Draw();
 
-	void BattleLoop();
-
 private:
 	sf::RenderWindow* myWindow;
 	sf::Texture* myWallTexture;

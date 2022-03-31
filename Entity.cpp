@@ -29,3 +29,8 @@ sf::Sprite Entity::GetSprite()
 {
 	return mySprite;
 }
+
+int Entity::GetDamage()
+{
+	return myDMG;
+}

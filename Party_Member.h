@@ -6,11 +6,14 @@
 class Party_Member : public Entity
 {
 public:
-	Party_Member(sf::Vector2f aPosition, int aHealth, sf::Sprite aSprite, sf::Texture &aTexture, int aDMG);
-
+	Party_Member();
+	Party_Member(sf::Vector2f aPosition, int aHealth, sf::Sprite aSprite, sf::Texture &aTexture, int aDMG, Classes aClass);
 	void Update();
+	Entity::Classes GetClass();
+	std::string GetClassStringRepresentation();
 
-private:
+protected:
+	Classes myClass;
 
 };
 #endif

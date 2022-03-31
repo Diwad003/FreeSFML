@@ -28,7 +28,7 @@ Game::Game(sf::RenderWindow& aWindow)
     tempPlayerPartyLeaderSprite.setScale(0.6f, 0.6f);
 
     int tempFloorY = 691;
-    myPlayerParty.push_back(new Party_Member(sf::Vector2f(1000, tempFloorY), 1, tempPlayerPartyLeaderSprite, tempPartyLeaderTexture, 1));
+    myPlayerParty.push_back(new Party_Member(sf::Vector2f(1000, tempFloorY), 1, tempPlayerPartyLeaderSprite, tempPartyLeaderTexture, 1, Entity::Classes::Warrior));
 
     sf::Texture tempEnemyPartyLeaderTexture = sf::Texture();
     tempEnemyPartyLeaderTexture.loadFromFile("Sprites/EnemyLeader.png");
@@ -44,10 +44,18 @@ void Game::Update()
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
         myWindow->close();
 
-    myTimeForBattle = myEnemyParty[0]->GetTimeForBattle();
-    if (myTimeForBattle)
+    for (size_t i = 0; i < myEnemyParty.size(); i++)
     {
-        BattleLoop();
+        myTimeForBattle = myEnemyParty[i]->GetTimeForBattle();
+        if (myTimeForBattle)
+        {
+            Battle tempBattle = Battle(myPlayerParty, myEnemyParty, *myWallSprite);
+            while (myTimeForBattle)
+            {
+                tempBattle.BattleLogic(*myWindow);
+            }
+            break;
+        }
     }
 
 #pragma region Wall Logic
@@ -122,13 +130,4 @@ void Game::Draw()
     }
 
     myWindow->display();
-}
-
-void Game::BattleLoop()
-{
-    Battle tempBattle = Battle(myPlayerParty, myEnemyParty, *myWallSprite);
-    while (myTimeForBattle)
-    {
-        tempBattle.BattleLogic(*myWindow);
-    }
 }

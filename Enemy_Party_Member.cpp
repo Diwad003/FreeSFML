@@ -1,8 +1,8 @@
 #include "Enemy_Party_Member.h"
 #include <iostream>
-#include "Game.h"
 
-Enemy_Party_Member::Enemy_Party_Member(sf::Vector2f aPosition, int aHealth, sf::Sprite aSprite, sf::Texture& aTexture, int aDMG, std::vector<Party_Member*> &aPlayerParty)
+Enemy_Party_Member::Enemy_Party_Member(sf::Vector2f aPosition, int aHealth, sf::Sprite aSprite, sf::Texture& aTexture, int aDMG, std::vector<Party_Member*> &aPlayerParty,
+	Classes aClass)
 {
 	myPosition = aPosition;
 	myHealth = aHealth;
@@ -12,11 +12,11 @@ Enemy_Party_Member::Enemy_Party_Member(sf::Vector2f aPosition, int aHealth, sf::
 	mySprite.setPosition(myPosition);
 	myDMG = aDMG;
 	myPlayerParty = aPlayerParty;
+	myClass = aClass;
 }
 
 void Enemy_Party_Member::Update()
 {
-
 	sf::IntRect r1 = mySprite.getTextureRect();
 	sf::IntRect r2 = myPlayerParty[0]->GetSprite().getTextureRect();
 
