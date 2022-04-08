@@ -10,21 +10,18 @@ Battle::Battle(std::vector<Party_Member*>& aPartyMembers, std::vector<Enemy_Part
 
 	myFont.loadFromFile("arial.ttf");
 	myText.setFont(myFont);
-	myText.setCharacterSize(24);
+	myText.setCharacterSize(30);
 	myText.setFillColor(sf::Color::Black);
 
 
-	sf::Vector2f tempPosition = sf::Vector2f(1000, 691);
-	for (size_t i = 0; i < myPlayerPartyMembers.size(); i++)
-	{
-		if (i > 0)
-		{
-			tempPosition.x += myPlayerPartyMembers[i - 1]->GetSprite().getScale().x;
-		}
-		myPlayerPartyMembers[i]->SetPosition(tempPosition);
-	}
+	//sf::Vector2f tempPosition = sf::Vector2f(myPlayerPartyMembers[0]->GetPosition().x - 100, 691);
+	//myPlayerPartyMembers[0]->GetSprite().setPosition(tempPosition);
+	//for (size_t i = 1; i < myPlayerPartyMembers.size(); i++)
+	//{
+	//	myPlayerPartyMembers[i]->GetSprite().setPosition(myPlayerPartyMembers[i - 1]->GetPosition().x + myPlayerPartyMembers[i]->GetSprite().getScale().x, 0);
+	//}
 
-	tempPosition = sf::Vector2f(2000, 691);
+/*	tempPosition = sf::Vector2f(2000, 691);
 	for (size_t i = 0; i < myEnemyPartyMembers.size(); i++)
 	{
 		if (i > 0)
@@ -32,7 +29,7 @@ Battle::Battle(std::vector<Party_Member*>& aPartyMembers, std::vector<Enemy_Part
 			tempPosition.x += myEnemyPartyMembers[i - 1]->GetSprite().getScale().x;
 		}
 		myEnemyPartyMembers[i]->SetPosition(tempPosition);
-	}
+	}*/
 }
 
 void Battle::BattleLogic(sf::RenderWindow& aWindow)
@@ -45,12 +42,13 @@ void Battle::BattleLogic(sf::RenderWindow& aWindow)
 			if (myPlayerPartyMembers[i]->GetClass() == Entity::Classes::Healer)
 			{
 				std::string str2("2: Heal\n");
-				if (!(tempString.find(str2) != std::string::npos)) 
+				if (tempString.find(str2) == std::string::npos)
 				{
 					tempString += "2: Heal\n";
 				}
 			}
 		}
+
 
 		myText.setString(tempString);
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
@@ -60,6 +58,7 @@ void Battle::BattleLogic(sf::RenderWindow& aWindow)
 			{
 				tempString = std::to_string(i) + ". " + myPlayerPartyMembers[i]->GetClassStringRepresentation();
 			}
+
 
 			while (true)
 			{
@@ -82,8 +81,6 @@ void Battle::BattleLogic(sf::RenderWindow& aWindow)
 			}
 
 
-
-
 			Enemy_Party_Member tempFirstEnemy = *myEnemyPartyMembers[0];
 			Party_Member tempFirstPlayer = *myPlayerPartyMembers[0];
 
@@ -92,40 +89,45 @@ void Battle::BattleLogic(sf::RenderWindow& aWindow)
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2))
 		{
-			//IMPLEMENT HEALING WITH HEALING ITEMS
+			//IMPLEMENT HEALING WITH HEALING SPELLS OR SOMETHING
 			myPlayerTurn = false;
 		}
 	}
 	else // EnemyTurn
 	{
-		int tempRNG = rand() % 3 + 1;
-		if (tempRNG == 1)
-		{
-			Enemy_Party_Member tempFirstEnemy = *myEnemyPartyMembers[0];
-			Party_Member tempFirstPlayer = *myPlayerPartyMembers[0];
+		//int tempRNG = rand() % 3 + 1;
+		//if (tempRNG == 1)
+		//{
+		//	Enemy_Party_Member tempFirstEnemy = *myEnemyPartyMembers[0];
+		//	Party_Member tempFirstPlayer = *myPlayerPartyMembers[0];
 
-			tempFirstPlayer.TakeDamage(tempFirstEnemy.GetDamage());
-		}
-		else if (tempRNG == 2)
+		//	tempFirstPlayer.TakeDamage(tempFirstEnemy.GetDamage());
+		//}
+		/*else if (tempRNG == 2)
 		{
 
 		}
 		else
 		{
 
-		}
+		}*/
 	}
-
 
 	Draw(aWindow);
 }
 
 void Battle::Draw(sf::RenderWindow& aWindow)
 {
+	aWindow.draw(myWallSprite);
 	for (size_t i = 0; i < myPlayerPartyMembers.size(); i++)
+	{
 		myPlayerPartyMembers[i]->Draw(aWindow);
+	}
 	for (size_t i = 0; i < myEnemyPartyMembers.size(); i++)
+	{
 		myEnemyPartyMembers[i]->Draw(aWindow);
+	}
 
 	aWindow.draw(myText);
+	aWindow.display();
 }

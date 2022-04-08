@@ -28,13 +28,15 @@ Game::Game(sf::RenderWindow& aWindow)
     tempPlayerPartyLeaderSprite.setScale(0.6f, 0.6f);
 
     int tempFloorY = 691;
-    myPlayerParty.push_back(new Party_Member(sf::Vector2f(1000, tempFloorY), 1, tempPlayerPartyLeaderSprite, tempPartyLeaderTexture, 1, Entity::Classes::Warrior));
+    myPlayerParty.push_back(new Party_Member(
+        sf::Vector2f(1000, tempFloorY), 1, tempPlayerPartyLeaderSprite, tempPartyLeaderTexture, 1, Entity::Classes::Warrior));
 
     sf::Texture tempEnemyPartyLeaderTexture = sf::Texture();
     tempEnemyPartyLeaderTexture.loadFromFile("Sprites/EnemyLeader.png");
     sf::Sprite tempEnemyPartyLeaderSprite = sf::Sprite();
     tempEnemyPartyLeaderSprite.setScale(0.6f, 0.6f);
-    myEnemyParty.push_back(new Enemy_Party_Member(sf::Vector2f(2000, tempFloorY), 1, tempEnemyPartyLeaderSprite, tempEnemyPartyLeaderTexture, 1, myPlayerParty));
+    myEnemyParty.push_back(new Enemy_Party_Member(
+        sf::Vector2f(2000, tempFloorY), 1, tempEnemyPartyLeaderSprite, tempEnemyPartyLeaderTexture, 1, myPlayerParty, Entity::Classes::Warrior));
 }
 
 void Game::Update()
@@ -107,18 +109,7 @@ void Game::Update()
 
 void Game::Draw()
 {
-    //sf::Text tempText;
-    //sf::Font tempFont;
-    //tempFont.loadFromFile("arial.ttf");
-    //tempText.setFont(tempFont);
-    //tempText.setCharacterSize(24);
-    //tempText.setFillColor(sf::Color::Red);
-    //tempText.setStyle(sf::Text::Bold);
-    //tempText.setString("TEXTURE");
-
-
     myWindow->draw(*myWallSprite);
-    //myWindow->draw(tempText);
 
     for (size_t i = 0; i < myPlayerParty.size(); i++)
     {
