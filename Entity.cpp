@@ -34,3 +34,8 @@ int Entity::GetDamage()
 {
 	return myDMG;
 }
+
+int Entity::GetHealth()
+{
+	return myHealth;
+}

@@ -51,10 +51,10 @@ void Game::Update()
         myTimeForBattle = myEnemyParty[i]->GetTimeForBattle();
         if (myTimeForBattle)
         {
-            Battle tempBattle = Battle(myPlayerParty, myEnemyParty, *myWallSprite);
+            Battle tempBattle = Battle(myPlayerParty, myEnemyParty, *myWallSprite, myWindow);
             while (myTimeForBattle)
             {
-                tempBattle.BattleLogic(*myWindow);
+                tempBattle.BattleLogic();
             }
             break;
         }

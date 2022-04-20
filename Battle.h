@@ -6,14 +6,22 @@
 class Battle
 {
 public:
-	Battle(std::vector<Party_Member*> &aPartyMembers, std::vector<Enemy_Party_Member*> &aEnemyPartyMembers, sf::Sprite& aWallSprite);
+	Battle(std::vector<Party_Member*> &aPartyMembers, std::vector<Enemy_Party_Member*> &aEnemyPartyMembers, sf::Sprite& aWallSprite, sf::RenderWindow*& aWindow);
 
-	void BattleLogic(sf::RenderWindow& aWindow);
-	void Draw(sf::RenderWindow& aWindow);
+	void BattleLogic();
+	void PressEnterToContinue();
+	int ChoosePartyMember();
+	void Attacking();
+	void Draw();
+
+	enum BattleSequences { Attack, Heal, Null };
 
 private:
 	std::vector<Party_Member*> myPlayerPartyMembers;
 	std::vector<Enemy_Party_Member*> myEnemyPartyMembers;
+	sf::RenderWindow* myWindow;
+
+	BattleSequences myBattleSequence;
 	sf::Sprite myWallSprite;
 	bool myPlayerTurn;
 	sf::Text myText;

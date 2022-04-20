@@ -17,6 +17,7 @@ public:
 	sf::Vector2f GetPosition();
 	sf::Sprite GetSprite();
 	int GetDamage();
+	int GetHealth();
 
 protected:
 	virtual void Update() = 0;
