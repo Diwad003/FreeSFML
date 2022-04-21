@@ -29,7 +29,15 @@ Game::Game(sf::RenderWindow& aWindow)
 
     int tempFloorY = 691;
     myPlayerParty.push_back(new Party_Member(
-        sf::Vector2f(1000, tempFloorY), 1, tempPlayerPartyLeaderSprite, tempPartyLeaderTexture, 1, Entity::Classes::Warrior));
+        sf::Vector2f(500, tempFloorY), 1, tempPlayerPartyLeaderSprite, tempPartyLeaderTexture, 1, Entity::Classes::Warrior));
+
+    sf::Texture tempPartyHealerTexture = sf::Texture();
+    tempPartyHealerTexture.loadFromFile("Sprites/PlayerHealer.png");
+    sf::Sprite tempPartyHealerSprite = sf::Sprite();
+    tempPartyHealerSprite.setScale(1.2f, 1.2f);
+    myPlayerParty.push_back(new Party_Member(
+        sf::Vector2f(300, tempFloorY), 1, tempPartyHealerSprite, tempPartyHealerTexture, 1, Entity::Classes::Healer));
+
 
     sf::Texture tempEnemyPartyLeaderTexture = sf::Texture();
     tempEnemyPartyLeaderTexture.loadFromFile("Sprites/EnemyLeader.png");
@@ -37,6 +45,13 @@ Game::Game(sf::RenderWindow& aWindow)
     tempEnemyPartyLeaderSprite.setScale(0.6f, 0.6f);
     myEnemyParty.push_back(new Enemy_Party_Member(
         sf::Vector2f(2000, tempFloorY), 1, tempEnemyPartyLeaderSprite, tempEnemyPartyLeaderTexture, 1, myPlayerParty, Entity::Classes::Warrior));
+
+    sf::Texture tempEnemyPartyHealerTexture = sf::Texture();
+    tempEnemyPartyHealerTexture.loadFromFile("Sprites/EnemyHealer.png");
+    sf::Sprite tempEnemyPartyHealerSprite = sf::Sprite();
+    tempEnemyPartyHealerSprite.setScale(1.2f, 1.2f);
+    myEnemyParty.push_back(new Enemy_Party_Member(
+        sf::Vector2f(2300, tempFloorY), 1, tempEnemyPartyHealerSprite, tempEnemyPartyHealerTexture, 1, myPlayerParty, Entity::Classes::Healer));
 }
 
 void Game::Update()

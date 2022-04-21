@@ -54,9 +54,9 @@ void Battle::BattleLogic()
 					}
 				}
 			}
-
-
 			myText.setString(tempString);
+
+
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
 			{
 				myBattleSequence = BattleSequences::Attack;
@@ -66,25 +66,10 @@ void Battle::BattleLogic()
 				myBattleSequence = BattleSequences::Heal;
 			}
 		}
-		//else // EnemyTurn
-		//{
-		//	//int tempRNG = rand() % 3 + 1;
-		//	//if (tempRNG == 1)
-		//	//{
-		//	//	Enemy_Party_Member tempFirstEnemy = *myEnemyPartyMembers[0];
-		//	//	Party_Member tempFirstPlayer = *myPlayerPartyMembers[0];
+		else
+		{
 
-		//	//	tempFirstPlayer.TakeDamage(tempFirstEnemy.GetDamage());
-		//	//}
-		//	/*else if (tempRNG == 2)
-		//	{
-
-		//	}
-		//	else
-		//	{
-
-		//	}*/
-		//}
+		}
 	}
 	else if (myBattleSequence == BattleSequences::Attack)
 	{
@@ -92,7 +77,7 @@ void Battle::BattleLogic()
 	}
 	else if (myBattleSequence == BattleSequences::Heal)
 	{
-		//IMPLEMENT HEALING WITH HEALING SPELLS OR SOMETHING
+		Healing();
 	}
 
 
@@ -143,33 +128,48 @@ void Battle::Attacking()
 		tempString += std::to_string(i) + ". " + myPlayerPartyMembers[i]->GetClassStringRepresentation() + "\n";
 	}
 	myText.setString(tempString);
-	myWindow->draw(myText);
+	Draw();
 	Party_Member tempAttackingPartyMember = *myPlayerPartyMembers[ChoosePartyMember()];
 
 
 	PressEnterToContinue();
 
 
-	std::string tempString = "Which enemy do you want to attack?\n";
+	tempString = "Which enemy do you want to attack?\n";
 	for (size_t i = 0; i < myEnemyPartyMembers.size(); i++)
 	{
 		tempString += std::to_string(i) + ". " + myEnemyPartyMembers[i]->GetClassStringRepresentation() + "\n";
 	}
 	myText.setString(tempString);
-	myWindow->draw(myText);
+	Draw();
 	Enemy_Party_Member tempEnemyThatIsAttacked = *myEnemyPartyMembers[ChoosePartyMember()];
 
 	
 	PressEnterToContinue();
 
 
-	std::string tempString = "You attack with your " + tempAttackingPartyMember.GetClassStringRepresentation() +
+	tempString = "You attack with your " + tempAttackingPartyMember.GetClassStringRepresentation() +
 		" against enemy " + tempEnemyThatIsAttacked.GetClassStringRepresentation() + " and damaged " + std::to_string(tempAttackingPartyMember.GetDamage()) + ".\n" +
-		" the enemy has " + std::to_string((tempEnemyThatIsAttacked.GetHealth() - tempAttackingPartyMember.GetDamage()));
-
+		" the enemy has " + std::to_string((tempEnemyThatIsAttacked.GetHealth() - tempAttackingPartyMember.GetDamage())) + " health." + "\n" +
+		"PRESS 1 TO CONTINUE";
+	myText.setString(tempString);
+	Draw();
 	tempEnemyThatIsAttacked.TakeDamage(tempAttackingPartyMember.GetDamage());
+	while (!sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
+	{
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+			myWindow->close();
+		Draw();
+	}
+
 
 	myPlayerTurn = false;
+	myBattleSequence = BattleSequences::Null;
+}
+
+void Battle::Healing()
+{
+
 }
 
 void Battle::Draw()

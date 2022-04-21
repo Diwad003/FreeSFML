@@ -12,6 +12,7 @@ public:
 	void PressEnterToContinue();
 	int ChoosePartyMember();
 	void Attacking();
+	void Healing();
 	void Draw();
 
 	enum BattleSequences { Attack, Heal, Null };
