@@ -7,16 +7,18 @@ class Entity
 {
 public:
 	enum class Classes { Healer, Warrior };
+	enum class Abilities {  };
 
 	Entity();
 
 	void TakeDamage(int aDMG);
+	void Heal(int aHealStrenght);
 	void SetPosition(sf::Vector2f aMoveTo);
 	void Draw(sf::RenderWindow& aWindow);
 
 	sf::Vector2f GetPosition();
 	sf::Sprite GetSprite();
-	int GetDamage();
+	int GetAbilityStrenght();
 	int GetHealth();
 
 protected:
@@ -26,7 +28,9 @@ protected:
 	sf::Vector2f myPosition;
 	sf::Texture myTexture;
 	int myHealth;
-	int myDMG;
+	int myAbilityStrenght;
 	sf::Sprite mySprite;
+	int myEXP;
+	int myAmoutOfEXPToNextLevel;
 };
 #endif

@@ -36,7 +36,7 @@ Game::Game(sf::RenderWindow& aWindow)
     sf::Sprite tempPartyHealerSprite = sf::Sprite();
     tempPartyHealerSprite.setScale(1.2f, 1.2f);
     myPlayerParty.push_back(new Party_Member(
-        sf::Vector2f(300, tempFloorY), 1, tempPartyHealerSprite, tempPartyHealerTexture, 1, Entity::Classes::Healer));
+        sf::Vector2f(300, tempFloorY), 1, tempPartyHealerSprite, tempPartyHealerTexture, 2, Entity::Classes::Healer));
 
 
     sf::Texture tempEnemyPartyLeaderTexture = sf::Texture();
@@ -69,7 +69,7 @@ void Game::Update()
             Battle tempBattle = Battle(myPlayerParty, myEnemyParty, *myWallSprite, myWindow);
             while (myTimeForBattle)
             {
-                tempBattle.BattleLogic();
+                tempBattle.BattleLogic(myTimeForBattle);
             }
             break;
         }

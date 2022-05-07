@@ -10,17 +10,17 @@ Enemy_Party_Member::Enemy_Party_Member(sf::Vector2f aPosition, int aHealth, sf::
 	mySprite = aSprite;
 	mySprite.setTexture(myTexture);
 	mySprite.setPosition(myPosition);
-	myDMG = aDMG;
+	myAbilityStrenght = aDMG;
 	myPlayerParty = aPlayerParty;
 	myClass = aClass;
 }
 
 void Enemy_Party_Member::Update()
 {
-	sf::IntRect r1 = mySprite.getTextureRect();
-	sf::IntRect r2 = myPlayerParty[0]->GetSprite().getTextureRect();
+	sf::IntRect tempIntRect1 = mySprite.getTextureRect();
+	sf::IntRect tempIntRect2 = myPlayerParty[0]->GetSprite().getTextureRect();
 
-	if (myPosition.x <= myPlayerParty[0]->GetPosition().x + r2.width && myPosition.x + r1.width >= myPlayerParty[0]->GetPosition().x)
+	if (myPosition.x <= myPlayerParty[0]->GetPosition().x + tempIntRect2.width && myPosition.x + tempIntRect1.width >= myPlayerParty[0]->GetPosition().x)
 	{
 		myTimeForBattle = true;
 	}

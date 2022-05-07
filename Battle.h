@@ -6,16 +6,18 @@
 class Battle
 {
 public:
+	enum BattleSequences { Attack, Heal, Null };
+
 	Battle(std::vector<Party_Member*> &aPartyMembers, std::vector<Enemy_Party_Member*> &aEnemyPartyMembers, sf::Sprite& aWallSprite, sf::RenderWindow*& aWindow);
 
-	void BattleLogic();
-	void PressEnterToContinue();
-	int ChoosePartyMember();
+	void BattleLogic(bool &aTimeForBattle);
+	int ChoosePartyMember(int& tempChosenPartyMember);
 	void Attacking();
 	void Healing();
 	void Draw();
-
-	enum BattleSequences { Attack, Heal, Null };
+	void PressEnterToContinue();
+	void ProcessDeadEnemies();
+	void ProcessDeadPlayers();
 
 private:
 	std::vector<Party_Member*> myPlayerPartyMembers;

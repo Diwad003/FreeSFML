@@ -9,6 +9,11 @@ void Entity::TakeDamage(int aDMG)
 	myHealth -= aDMG;
 }
 
+void Entity::Heal(int aHealStrenght)
+{
+	myHealth += aHealStrenght;
+}
+
 void Entity::SetPosition(sf::Vector2f aMoveTo)
 {
 	myPosition += aMoveTo;
@@ -30,9 +35,9 @@ sf::Sprite Entity::GetSprite()
 	return mySprite;
 }
 
-int Entity::GetDamage()
+int Entity::GetAbilityStrenght()
 {
-	return myDMG;
+	return myAbilityStrenght;
 }
 
 int Entity::GetHealth()

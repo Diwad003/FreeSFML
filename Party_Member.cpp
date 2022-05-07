@@ -4,7 +4,7 @@ Party_Member::Party_Member()
 {
 }
 
-Party_Member::Party_Member(sf::Vector2f aPosition, int aHealth, sf::Sprite aSprite, sf::Texture& aTexture, int aDMG, Classes aClass)
+Party_Member::Party_Member(sf::Vector2f aPosition, int aHealth, sf::Sprite aSprite, sf::Texture& aTexture, int aAbilityStrenght, Classes aClass)
 {
 	myPosition = aPosition;
 	myHealth = aHealth;
@@ -12,8 +12,10 @@ Party_Member::Party_Member(sf::Vector2f aPosition, int aHealth, sf::Sprite aSpri
 	mySprite = aSprite;
 	mySprite.setTexture(myTexture);
 	mySprite.setPosition(myPosition);
-	myDMG = aDMG;
+	myAbilityStrenght = aAbilityStrenght;
 	myClass = aClass;
+
+	myAmoutOfEXPToNextLevel = 10;
 }
 
 void Party_Member::Update()
