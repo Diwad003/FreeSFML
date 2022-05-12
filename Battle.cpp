@@ -25,7 +25,9 @@ void Battle::BattleLogic(bool& aTimeForBattle)
 	{
 		if (myEnemyPartyMembers.size() <= 0 || myPlayerPartyMembers.size() <= 0)
 		{
+
 			aTimeForBattle = false;
+			return;
 		}
 
 
@@ -71,8 +73,6 @@ void Battle::BattleLogic(bool& aTimeForBattle)
 
 	Draw();
 }
-
-
 
 int Battle::ChoosePartyMember(int &tempChosenPartyMember)
 {
@@ -147,10 +147,8 @@ void Battle::Attacking()
 	myPlayerTurn = false;
 	myBattleSequence = BattleSequences::Null;
 
-	delete(tempAttackingPartyMember);
-	tempAttackingPartyMember = NULL;
-	delete(tempEnemyThatIsAttacked);
-	tempEnemyThatIsAttacked = NULL;
+	ProcessDead();
+	ProcessDead();
 }
 
 void Battle::Healing()
@@ -233,19 +231,7 @@ void Battle::PressEnterToContinue()
 	}
 }
 
-void Battle::ProcessDeadEnemies()
-{
-	for (size_t i = 0; i < myEnemyPartyMembers.size(); i++)
-	{
-		if (myEnemyPartyMembers[i]->GetHealth() <= 0)
-		{
-			delete(myEnemyPartyMembers[i]);
-			myEnemyPartyMembers.erase(myEnemyPartyMembers.begin() + i);
-		}
-	}
-}
-
-void Battle::ProcessDeadPlayers()
+void Battle::ProcessDead()
 {
 	for (size_t i = 0; i < myPlayerPartyMembers.size(); i++)
 	{
@@ -253,6 +239,16 @@ void Battle::ProcessDeadPlayers()
 		{
 			delete(myPlayerPartyMembers[i]);
 			myPlayerPartyMembers.erase(myPlayerPartyMembers.begin() + i);
+		}
+	}
+
+
+	for (size_t i = 0; i < myEnemyPartyMembers.size(); i++)
+	{
+		if (myEnemyPartyMembers[i]->GetHealth() <= 0)
+		{
+			delete(myEnemyPartyMembers[i]);
+			myEnemyPartyMembers.erase(myEnemyPartyMembers.begin() + i);
 		}
 	}
 }

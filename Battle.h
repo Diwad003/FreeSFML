@@ -16,8 +16,8 @@ public:
 	void Healing();
 	void Draw();
 	void PressEnterToContinue();
-	void ProcessDeadEnemies();
-	void ProcessDeadPlayers();
+	void ProcessDead();
+
 
 private:
 	std::vector<Party_Member*> myPlayerPartyMembers;

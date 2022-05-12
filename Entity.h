@@ -7,7 +7,6 @@ class Entity
 {
 public:
 	enum class Classes { Healer, Warrior };
-	enum class Abilities {  };
 
 	Entity();
 
