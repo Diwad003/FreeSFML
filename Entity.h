@@ -19,6 +19,10 @@ public:
 	sf::Sprite GetSprite();
 	int GetAbilityStrenght();
 	int GetHealth();
+	int GetLevel();
+	
+	void AddToEXP(int& aEXP);
+	void LevelUp();
 
 protected:
 	virtual void Update() = 0;
@@ -31,5 +35,6 @@ protected:
 	sf::Sprite mySprite;
 	int myEXP;
 	int myAmoutOfEXPToNextLevel;
+	int myLevel;
 };
 #endif

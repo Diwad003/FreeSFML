@@ -44,3 +44,25 @@ int Entity::GetHealth()
 {
 	return myHealth;
 }
+
+int Entity::GetLevel()
+{
+	return myLevel;
+}
+
+void Entity::AddToEXP(int& aEXP)
+{
+	myEXP += aEXP;
+}
+
+void Entity::LevelUp()
+{
+	while (myEXP >= myAmoutOfEXPToNextLevel)
+	{
+		if (myEXP >= myAmoutOfEXPToNextLevel)
+		{
+			myLevel++;
+			myEXP -= myAmoutOfEXPToNextLevel;
+		}
+	}
+}

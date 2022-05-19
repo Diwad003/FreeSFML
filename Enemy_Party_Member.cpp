@@ -22,11 +22,11 @@ void Enemy_Party_Member::Update()
 
 	if (myPosition.x <= myPlayerParty[0]->GetPosition().x + tempIntRect2.width && myPosition.x + tempIntRect1.width >= myPlayerParty[0]->GetPosition().x)
 	{
-		myTimeForBattle = true;
+		myTimeForBattle = new bool(true);
 	}
 }
 
-bool Enemy_Party_Member::GetTimeForBattle()
+bool* Enemy_Party_Member::GetTimeForBattle()
 {
 	return myTimeForBattle;
 }

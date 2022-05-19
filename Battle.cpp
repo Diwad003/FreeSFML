@@ -16,21 +16,21 @@ Battle::Battle(std::vector<Party_Member*>& aPartyMembers, std::vector<Enemy_Part
 	myText.setFillColor(sf::Color::Black);
 }
 
-void Battle::BattleLogic(bool& aTimeForBattle)
+void Battle::BattleLogic(bool* &aTimeForBattle)
 {
+	if (myEnemyPartyMembers.size() == 0 || myPlayerPartyMembers.size() == 0)
+	{
+		aTimeForBattle = new bool(false);
+		return;
+	}
+
+	Draw();
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 		myWindow->close();
 
 	if (myBattleSequence == BattleSequences::Null)
 	{
-		if (myEnemyPartyMembers.size() <= 0 || myPlayerPartyMembers.size() <= 0)
-		{
-
-			aTimeForBattle = false;
-			return;
-		}
-
-
 		if (myPlayerTurn)
 		{
 			std::string tempString = "You are in a battle with the enemy, press on the respective number for the action you want to do:\n1: Attack\n";
@@ -58,7 +58,7 @@ void Battle::BattleLogic(bool& aTimeForBattle)
 		}
 		else
 		{
-			myPlayerTurn = true;
+			myPlayerTurn = true;	//ENEMY AI
 		}
 	}
 	else if (myBattleSequence == BattleSequences::Attack)
@@ -69,9 +69,6 @@ void Battle::BattleLogic(bool& aTimeForBattle)
 	{
 		Healing();
 	}
-
-
-	Draw();
 }
 
 int Battle::ChoosePartyMember(int &tempChosenPartyMember)
@@ -148,7 +145,6 @@ void Battle::Attacking()
 	myBattleSequence = BattleSequences::Null;
 
 	ProcessDead();
-	ProcessDead();
 }
 
 void Battle::Healing()
@@ -213,7 +209,8 @@ void Battle::Draw()
 	}
 	for (size_t i = 0; i < myEnemyPartyMembers.size(); i++)
 	{
-		myEnemyPartyMembers[i]->Draw(*myWindow);
+		myWindow->draw(myEnemyPartyMembers[i]->GetSprite());
+		//myEnemyPartyMembers[i]->Draw(*myWindow);
 	}
 
 	myWindow->draw(myText);
@@ -247,6 +244,12 @@ void Battle::ProcessDead()
 	{
 		if (myEnemyPartyMembers[i]->GetHealth() <= 0)
 		{
+			int tempEXPToAdd = myEnemyPartyMembers[i]->GetAbilityStrenght() * 2;
+			for (size_t j = 0; j < myPlayerPartyMembers.size(); j++)
+			{
+				myPlayerPartyMembers[j]->AddToEXP(tempEXPToAdd);
+			}
+
 			delete(myEnemyPartyMembers[i]);
 			myEnemyPartyMembers.erase(myEnemyPartyMembers.begin() + i);
 		}

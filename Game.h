@@ -24,7 +24,9 @@ private:
 	sf::Clock myDeltaTimeClock;
 	float myDeltaTime;
 	float myWallVelocity;
+	sf::Text myText;
+	sf::Font myFont;
 
-	bool myTimeForBattle;
+	bool* myTimeForBattle;
 };
 #endif

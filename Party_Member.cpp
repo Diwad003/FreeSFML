@@ -15,7 +15,7 @@ Party_Member::Party_Member(sf::Vector2f aPosition, int aHealth, sf::Sprite aSpri
 	myAbilityStrenght = aAbilityStrenght;
 	myClass = aClass;
 
-	myAmoutOfEXPToNextLevel = 10;
+	myAmoutOfEXPToNextLevel = 60;
 }
 
 void Party_Member::Update()

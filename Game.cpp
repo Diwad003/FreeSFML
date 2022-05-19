@@ -7,9 +7,14 @@ Game::Game(sf::RenderWindow& aWindow)
     myWindow = &aWindow;
     myDeltaTime = 0;
     myWallVelocity = 0;
-    myTimeForBattle = false;
+    myTimeForBattle = new bool(false);
     
     //system("dir");
+
+    myFont.loadFromFile("arial.ttf");
+    myText.setFont(myFont);
+    myText.setCharacterSize(30);
+    myText.setFillColor(sf::Color::Black);
 
     myWallTexture = new sf::Texture();
     myWallTexture->loadFromFile("Sprites/Wall.png");
@@ -63,6 +68,12 @@ void Game::Update()
 
     for (size_t i = 0; i < myEnemyParty.size(); i++)
     {
+        myEnemyParty[i]->SetPosition(sf::Vector2f(myWallVelocity * myDeltaTime, 0));
+        myEnemyParty[i]->Update();
+    }
+
+    for (size_t i = 0; i < myEnemyParty.size(); i++)
+    {
         myTimeForBattle = myEnemyParty[i]->GetTimeForBattle();
         if (myTimeForBattle)
         {
@@ -70,8 +81,29 @@ void Game::Update()
             while (myTimeForBattle)
             {
                 tempBattle.BattleLogic(myTimeForBattle);
+
+                if (!*myTimeForBattle)
+                {
+                    break;
+                }
             }
-            break;
+
+            for (size_t i = 0; i < myPlayerParty.size(); i++)
+            {
+                myPlayerParty[i]->LevelUp();
+
+
+                myText.setString("The party member " + myPlayerParty[i]->GetClassStringRepresentation() + " is now level " + std::to_string(myPlayerParty[i]->GetLevel()));
+                myWindow->draw(myText);
+
+                myText.setString("PRESS ENTER TO CONTINUE");
+                while (!sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+                {
+                    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+                        myWindow->close();
+                    myWindow->draw(myText);
+                }
+            }
         }
     }
 
@@ -114,12 +146,6 @@ void Game::Update()
 
     myWallSprite->move(myWallVelocity * myDeltaTime, 0);
 #pragma endregion
-
-    for (size_t i = 0; i < myEnemyParty.size(); i++)
-    {
-        myEnemyParty[i]->SetPosition(sf::Vector2f(myWallVelocity * myDeltaTime, 0));
-        myEnemyParty[i]->Update();
-    }
 }
 
 void Game::Draw()

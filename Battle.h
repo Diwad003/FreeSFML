@@ -10,7 +10,7 @@ public:
 
 	Battle(std::vector<Party_Member*> &aPartyMembers, std::vector<Enemy_Party_Member*> &aEnemyPartyMembers, sf::Sprite& aWallSprite, sf::RenderWindow*& aWindow);
 
-	void BattleLogic(bool &aTimeForBattle);
+	void BattleLogic(bool* &aTimeForBattle);
 	int ChoosePartyMember(int& tempChosenPartyMember);
 	void Attacking();
 	void Healing();
